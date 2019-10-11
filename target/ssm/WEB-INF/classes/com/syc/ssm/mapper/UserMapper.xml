@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.syc.ssm.mapper.UserMapper">
+
+  <!--通用的返回值-->
+  <resultMap id="BaseResultMap" type="com.syc.ssm.bean.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR"  property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+
+  <select id="getUserByName" resultMap="BaseResultMap">
+    select id,username,password
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
+
+  <!--mybatis中#与?的区别:#类似于jdbc中的预编译功能,可以防止sql注入;?只是普通的字符串,不能防止sql注入.-->
+  <insert id="insertUser" parameterType="com.syc.ssm.bean.User">
+    insert into user (id, username, password)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>
